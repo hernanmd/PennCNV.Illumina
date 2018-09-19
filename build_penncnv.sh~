@@ -39,8 +39,9 @@ echo "Downloading and installing Pharo..."
 #./pi install NeoCSV
 wget -O- get.pharo.org/stable | bash
 
-echo "Filter FinalReport CNV..."
+echo "Filter FinalReportCNV..."
 export frptcsv
 export pmfile
 export pmfile
-pharo -headless Pharo.image eval st build-penncnv-in.st
+pharo -headless Pharo.image eval st buildFR4signalList.st
+pharo -headless Pharo.image eval st buildMap4CompilePFB.st

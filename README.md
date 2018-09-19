@@ -9,30 +9,26 @@ Workflow for Equine 65K PennCNV analysis
   - Clone this repository.
   - Put your Illumina Final Results into the directory, i.e.: EQN65KV02_20170605_FinalReportCNV.zip (do not uncompress).
   - Put both your original PED/MAP files and already filtered PED/MAP files into the directory.
-  - Download and install [Pharo](http://pharo.org/download) using [GitBash](https://git-scm.com/downloads) or [MSYS2](http://www.msys2.org/)
-    - ```wget -O- https://get.pharo.org | bash```
-      - If TLS errors, try using: ```wget -O- --no-check-certificate https://get.pharo.org | bash```
-    - Install NeoCSV package ```./pharo Pharo.image eval "Metacello new repository: 'github://svenvc/NeoCSV/r
-epository'; configuration: 'NeoCSV'; version: #stable; load"```
     
  # Usage
  
 ```bash
-./build_snps-FR.sh EQN65KV02_20170605_FinalReportCNV.zip EQN65KV02 EQN65KV02.fltr
+./build_penncnv.sh EQN65KV02_20170605_FinalReportCNV.zip EQN65KV02 EQN65KV02.fltr
 ```
-  - First parameter is the Illumina Final Report ZIP file.
+  - First parameter is a ZIP files containing Illumina Final Report CSV file.
   - Second parameter is the name of the PED/MAP file without the extension.
   - Third parameter is the name of the filtered PED/MAP file without the extension.
+  - Fourth parameter is the Illumina SNP_Map.txt (tab-delimited) file.
 
-Edit the file PennCNV_run1.sh to adjust parameters and/or enable downloading the GC file (required for the first time): 
+Edit the file run_penncnv.sh to adjust parameters and/or enable downloading the GC file (required for the first time): 
 
 ```
-./PennCNV_run1.sh EQN65KV02.fltr.ped
+./run_penncnv.sh EQN65KV02.fltr.ped
 ```
 
  # Issues
  
-   - Please report issues here: [https://github.com/hernanmd/CNV_WF.EQN_2018/issues](https://github.com/hernanmd/CNV_WF.EQN_2018/issues) describing:
+   - Please report issues here: [https://github.com/hernanmd/PennCNV.Illumina/issues](https://github.com/hernanmd/PennCNV.Illumina/issues) describing:
      - Your platform (Operating System, Architecture: i686, x64)
      - The command you have used.
      - The produced output. 

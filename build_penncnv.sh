@@ -37,10 +37,10 @@ echo "Downloading and installing Pharo..."
 #curl -O https://raw.githubusercontent.com/hernanmd/pi/master/pi
 #chmod 755 pi
 #./pi install NeoCSV
-wget -O- get.pharo.org/stable | bash
+wget -O- get.pharo.org/40 | bash
 
 echo "Filter FinalReport CNV..."
 export frptcsv
 export pmfile
 export pmfile
-pharo -headless Pharo.image eval st build-penncnv-in.st
+pharo -headless Pharo.image st build-penncnv-in.st

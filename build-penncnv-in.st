@@ -19,10 +19,18 @@ Output files:
 		B Allele Freq
 		Log R Ratio
 "
-| exclsnps outfrpt |
+| exclsnps outfrpt osEnv |
 
-frptcsv := (OSEnvironment current getEnv: 'frptcsv').
-exclsnps := (OSEnvironment current getEnv: 'exclsnps'). "'EQN65kCAR.removed.snps'."
+Metacello new
+	configuration: 'NeoCSV';
+	repository: 'github://svenvc/NeoCSV/repository';
+	load.
+
+osEnv := SmalltalkImage current version = 'Pharo6.0'
+	ifTrue: [ OSEnvironment current ]
+	ifFalse: [ OSEnvironment default ].
+frptcsv := (osEnv getEnv: 'frptcsv').
+exclsnps := (osEnv getEnv: 'exclsnps'). "'EQN65kCAR.removed.snps'."
 insnpmap := 'SNP_Map.txt'.
 outfrbaf := frptcsv , '.fltr'. "'IGEVET_EQN65KV02_20170605_FinalReportCNV.filtered.2.csv'."
 outfrmap := snpmap , '.fltr'. 

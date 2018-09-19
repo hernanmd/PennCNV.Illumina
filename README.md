@@ -12,6 +12,8 @@ Workflow for running PennCNV analysis with Illumina platform files.
     
  # Usage
  
+Involves running two scripts, first one to prepare input files for PennCNV and second one to run the PennCNV scripts.
+
 ```bash
 ./build_penncnv.sh EQN65KV02_20170605_FinalReportCNV.zip EQN65KV02 EQN65KV02.fltr
 ```
@@ -23,9 +25,12 @@ Workflow for running PennCNV analysis with Illumina platform files.
 Edit the file run_penncnv.sh to adjust parameters and/or enable downloading the GC file (required for the first time): 
 
 ```
-./run_penncnv.sh EQN65KV02.fltr.ped
+./run_penncnv.sh EQN65K EQN65KV02.fltr.ped
 ```
 
+  - First parameter is the project name.
+  - Second parameter is the Illumina Final Report CNV (CSV file) filtered in the previous step.
+  
  # Issues
  
    - Please report issues here: [https://github.com/hernanmd/PennCNV.Illumina/issues](https://github.com/hernanmd/PennCNV.Illumina/issues) describing:

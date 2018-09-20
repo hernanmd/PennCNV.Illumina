@@ -146,12 +146,23 @@ echo "Downloading refGene from UCSC..."
 #gunzip refGene.txt.gz
 
 echo "CNV Annotation for method 1..."
-scan_region.pl \
-	$raw_file1 \
-	refGene.txt \
-	-refgene \
-#	-reflink hg18_refLink.txt \
-	-kgxref kgXref.txt \
-#	--knowngene \
-	-expandmax 5m \
-	> sampleall.cnv.rg
+scan_region.pl --verbose --refgene_flag $raw_file1 refGene.txt > $raw_file1.annot
+scan_region.pl --verbose --refgene_flag $raw_file1 refGene.txt --expandmax 5m > $raw_file1.annot.5m
+scan_region.pl --verbose --overlap --refgene_flag $raw_file1 refGene.txt > $raw_file1.annot.ovlap
+scan_region.pl --verbose --dbregion --refgene_flag $raw_file1 refGene.txt > $raw_file1.annot.dbregion
+
+echo "Generating CNV Visualization files..."
+for sig in $(cat $signal_file_list); do
+	visualize_cnv.pl \
+		-format plot \
+		-out $sig.jpg \
+		-signal $sig \
+		--snpposfile $snp_map \
+		$raw_file1
+	visualize_cnv.pl \
+		-format bed \
+		-out $sig.bed \
+		-signal $sig \
+		--snpposfile $snp_map \
+		$raw_file1
+done

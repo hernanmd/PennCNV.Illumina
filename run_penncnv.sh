@@ -35,7 +35,7 @@ signal_file_list="signal_filtered_file_names.txt"
 echo "Using $gc_file_sorted for building PFB"
 echo "Using GC MODEL: $gc_file_model"
 
-snp_map="SNP_Map_filtered.txt"
+snp_map="SNP_Map.txt.fltr"
 
 [ -f $illumina_final_report ] || { echo "ERROR: Illumina Final Report ($illumina_final_report) not found in current directory"; exit 1; }
 [ -f $gc_file_sorted ] || { echo "ERROR: GC file ($gc_file) not found in current directory"; exit 1; }
@@ -106,6 +106,7 @@ echo "done"
 
 echo "About detecting CNVs method 1..."
 detect_cnv.pl \
+	-verbose \
 	-test \
 	-hmm $hmm1 \
 	-pfb $pfb_file \
@@ -120,6 +121,7 @@ echo "done"
 
 echo "About detecting CNVs method 2..."
 detect_cnv.pl \
+	-verbose \
 	-test \
 	-hmm $hmm2 \
 	-pfb $pfb_file \
@@ -134,7 +136,22 @@ detect_cnv.pl \
 filter_cnv.pl \
 	$raw_file1 \
 	-qclogfile $qc_log_file1 \
-	-qclrrsd1 $qclrrsd \
+	-qclrrsd $qclrrsd1 \
 	-qcpassout $qc_passout1  \
 	-qcsumout $qc_sumout1 \
 	-out $qc_goodcnv1
+
+echo "Downloading refGene from UCSC..."
+#wget http://hgdownload.soe.ucsc.edu/goldenPath/equCab2/database/refGene.txt.gz
+#gunzip refGene.txt.gz
+
+echo "CNV Annotation for method 1..."
+scan_region.pl \
+	$raw_file1 \
+	refGene.txt \
+	-refgene \
+#	-reflink hg18_refLink.txt \
+	-kgxref kgXref.txt \
+#	--knowngene \
+	-expandmax 5m \
+	> sampleall.cnv.rg

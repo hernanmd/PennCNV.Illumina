@@ -19,30 +19,31 @@ Output files:
 		B Allele Freq
 		Log R Ratio
 "
-| exclsnps outfrpt osEnv |
+| exclsnps outfrpt osEnv frptcsv insnpmap outfrbaf outfrmap excls |
 
+Iceberg enableMetacelloIntegration: true;
+	remoteTypeSelector: #httpsUrl.
 Metacello new
 	configuration: 'NeoCSV';
 	repository: 'github://svenvc/NeoCSV/repository';
 	load.
-
-osEnv := SmalltalkImage current version = 'Pharo6.0'
+osEnv := (SmalltalkImage current version beginsWith: 'Pharo6')
 	ifTrue: [ OSEnvironment current ]
 	ifFalse: [ OSEnvironment default ].
-frptcsv := (osEnv getEnv: 'frptcsv').
-exclsnps := (osEnv getEnv: 'exclsnps'). "'EQN65kCAR.removed.snps'."
+frptcsv := osEnv getEnv: 'frptcsv'.
+exclsnps := (osEnv getEnv: 'pmfile') , '.fltr.snps'. "'EQN65kCAR.fltr.snps'."
 insnpmap := 'SNP_Map.txt'.
 outfrbaf := frptcsv , '.fltr'. "'IGEVET_EQN65KV02_20170605_FinalReportCNV.filtered.2.csv'."
-outfrmap := snpmap , '.fltr'. 
+outfrmap := insnpmap , '.fltr'. 
 excls := exclsnps asFileReference contents lines.
 
 frptcsv asFileReference readStreamDo: [ : stream |
-    | reader excls |
+    | reader |
     reader := (NeoCSVReader on: stream)
             separator: $,;
             yourself.
     10 timesRepeat: [ reader skipHeader ].
-    outfrpt asFileReference writeStreamDo: [ : writeStream |
+    outfrbaf asFileReference writeStreamDo: [ : writeStream |
         | writer |
         writer := (NeoCSVWriter on: writeStream)
             fieldWriter: #raw;

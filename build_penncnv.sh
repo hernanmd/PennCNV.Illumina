@@ -29,18 +29,17 @@ sort $pmfile.f2.map > $pmfile.f2.sorted.map
 # sort EQN65kCAR-GENO01.f2.map > EQN65kCAR-GENO01.f2.sorted.map
 sort $fpmfile.f2.map > $fpmfile.f2.sorted.map
 
-echo "Write removed SNPs to new file..."
+echo "Write filtered SNPs to a new file..."
 # comm -3 EQN65kCAR.f2.sorted.map EQN65kCAR-GENO01.f2.sorted.map > EQN65kCAR.removed.snps
-comm -3 $pmfile.f2.sorted.map $fpmfile.f2.sorted.map > $pmfile.removed.snps
+comm -3 $pmfile.f2.sorted.map $fpmfile.f2.sorted.map > $pmfile.fltr.snps
 
 echo "Downloading and installing Pharo..."
 #curl -O https://raw.githubusercontent.com/hernanmd/pi/master/pi
 #chmod 755 pi
 #./pi install NeoCSV
-wget -O- get.pharo.org/40 | bash
+wget -O- get.pharo.org | bash
 
 echo "Filter FinalReport CNV..."
 export frptcsv
 export pmfile
-export pmfile
-pharo -headless Pharo.image st build-penncnv-in.st
+./pharo -headless Pharo.image st build-penncnv-in.st

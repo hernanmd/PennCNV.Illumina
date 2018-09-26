@@ -77,11 +77,6 @@ qc_passout1=hmm1_minsnp_"$minsnp".qcpass
 qc_sumout1=hmm1_minsnp_"$minsnp".qcsum
 qc_goodcnv1=hmm1_minsnp_"$minsnp".goodcnv
 
-############ For complementary HMM file
-hmm2="/usr/local/src/PennCNV-1.0.4/example/example.hmm"
-log_file2=hmm2.minsnp_"$minsnp".log
-raw_file2=hmm2.minsnp_"$minsnp".rawcnv
-
 ###############################################################
 # Begin processing
 ###############################################################
@@ -144,20 +139,6 @@ detect_cnv.pl \
 	-log $log_file1 \
 	-out $raw_file1
 echo "done"
-
-echo "About detecting CNVs method 2..."
-detect_cnv.pl \
-	-verbose \
-	-test \
-	-hmm $hmm2 \
-	-pfb $pfb_file \
-	-minsnp $minsnp \
-	-lastchr $lastchr \
-	-list $signal_file_list \
-	-gcmodelfile $gc_file_model \
-	-confidence \
-	-log $log_file2 \
-	-out $raw_file2
 
 filter_cnv.pl \
 	$raw_file1 \

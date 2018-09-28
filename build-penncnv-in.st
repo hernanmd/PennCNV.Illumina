@@ -31,9 +31,9 @@ osEnv := (SmalltalkImage current version beginsWith: 'Pharo6')
 	ifTrue: [ OSEnvironment current ]
 	ifFalse: [ OSEnvironment default ].
 frptcsv := osEnv getEnv: 'frptcsv'.
-exclsnps := (osEnv getEnv: 'pmfile') , '.fltr.snps'. "'EQN65kCAR.fltr.snps'."
+exclsnps := (osEnv getEnv: 'pmfile') , '.fltr.snps'.
 insnpmap := 'SNP_Map.txt'.
-outfrbaf := frptcsv , '.fltr'. "'IGEVET_EQN65KV02_20170605_FinalReportCNV.filtered.2.csv'."
+outfrbaf := frptcsv , '.fltr'.
 outfrmap := insnpmap , '.fltr'. 
 excls := exclsnps asFileReference contents lines.
 
@@ -48,7 +48,7 @@ frptcsv asFileReference readStreamDo: [ : stream |
         writer := (NeoCSVWriter on: writeStream)
             fieldWriter: #raw;
             separator: $,;
-            writeHeader: #('SNP Name' 'Sample ID' 'B Allele Freq' 'Log R Ratio');
+            writeHeader: #('SNP' 'Name' 'Sample ID' 'B Allele Freq' 'Log R Ratio');
             yourself.
         reader do: [ : row | (excls includes: row first) ifFalse: [ writer nextPut: row ] ].
         writer flush ] ].

@@ -55,7 +55,6 @@ echo "Using $gc_file_sorted for building PFB"
 echo "Using GC MODEL: $gc_file_model"
 
 [ -f $illumina_final_report ] || { echo "ERROR: Illumina Final Report ($illumina_final_report) not found in current directory"; exit 1; }
-# [ -f $gc_file_sorted ] || { echo "ERROR: GC file ($gc_file) not found in current directory"; exit 1; }
 [ -f $snp_map ] || { echo "ERROR: SNP Map file ($snp_map) not found in current directory"; exit 1; }
 
 ##############################################

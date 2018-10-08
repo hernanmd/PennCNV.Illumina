@@ -42,10 +42,10 @@ snp_map="SNP_Map.txt.fltr"
 ##############################################################
 pfb_file=$prj_prefix".pfb"
 gc_file_model=$prj_prefix".gcmodel"
-signal_output_dir="PennCNV_run1/"
-#signal_output_dir="PennCNV_signals/"
-signal_output_suffix=".txt"
-signal_file_list="signal_filtered_file_names.txt"
+signal_outdir="PennCNV_run1/"
+#signal_outdir="PennCNV_signals/"
+signal_outsuffix=".txt"
+signal_file_list="signal_fltr_files.txt"
 
 ##############################################
 # Compile PFB sanity checks
@@ -81,28 +81,28 @@ qc_goodcnv1=hmm1_minsnp_"$minsnp".goodcnv
 ###############################################################
 
 # Create output directories
-rm -frv $signal_output_dir
+rm -frv $signal_outdir
 rm -fv $signal_file_list
-mkdir $signal_output_dir
+mkdir $signal_outdir
 
 echo "About splitting Illumina report..."
 # The output is a directory with 1 file per sample
 split_illumina_report.pl \
 	-comma \
-	-prefix "$signal_output_dir" \
-	-suffix "$signal_output_suffix" "$illumina_final_report"
+	-prefix "$signal_outdir" \
+	-suffix "$signal_outsuffix" "$illumina_final_report"
 echo "done"
 
 # No .pfb files? Use compile_pfb.pl
 # ls='ls -lkF --color=auto'
 echo "Creating signal file list"
 #unalias ls
-signal_files=$(ls -1 $signal_output_dir)
+signal_files=$(ls -1 $signal_outdir)
 echo "Created signal file list: $signal_files"
 
 # The output is a new file with directory/signal_file_name in each line
 for f in $signal_files; do
-	echo $signal_output_dir/$f >> $signal_file_list
+	echo $signal_outdir/$f >> $signal_file_list
 done
 
 # SNP_Map.txt from SNP_Map.zip in the Illumina raw files

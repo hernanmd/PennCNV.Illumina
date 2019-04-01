@@ -2,9 +2,9 @@
 # Author: Hernan Morales Durand
 # Input parameters:
 #
-#	Illumina Final Report ZIP file
-#	Name of the PED/MAP file without extension
-#	Name of the filtered PED/MAP without extension
+#	$1 : Illumina Final Report ZIP file
+#	$2 : Name of the PED/MAP file without extension
+#	$3 : Name of the filtered PED/MAP without extension
 #
 # Output files:
 
@@ -34,12 +34,9 @@ echo "Write filtered SNPs to a new file..."
 comm -3 $pmfile.f2.sorted.map $fpmfile.f2.sorted.map > $pmfile.fltr.snps
 
 echo "Downloading and installing Pharo..."
-#curl -O https://raw.githubusercontent.com/hernanmd/pi/master/pi
-#chmod 755 pi
-#./pi install NeoCSV
-wget -O- get.pharo.org | bash
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/hernanmd/pi/master/install.sh)"
 
-echo "Filter FinalReport CNV..."
+echo "Filter FinalReport CNV and build PennCNV input files..."
 export frptcsv
 export pmfile
 ./pharo -headless Pharo.image st build-penncnv-in.st
